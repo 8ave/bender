@@ -34,7 +34,7 @@ BenderEditor::BenderEditor(
                 }
                 knobs.emplace_back(new Knob(component->getDrawableBounds(), state, name));
                 addAndMakeVisible(*knobs.back());
-                knobs.back()->resize();               
+                knobs.back()->resize();
             }
             layer->setVisible(false);
         }

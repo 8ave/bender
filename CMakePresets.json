@@ -75,7 +75,10 @@
             "inherits": [
                 "flags-unix",
                 "ci-std"
-            ]
+            ],
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE" : "Release"
+            }
         },
         {
             "name": "ci-win64",
