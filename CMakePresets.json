@@ -75,12 +75,7 @@
             "inherits": [
                 "flags-unix",
                 "ci-std"
-            ],
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_CXX_COMPILER": "clang++",
-                "CMAKE_C_COMPILER": "clang"
-            }
+            ]
         },
         {
             "name": "ci-win64",
@@ -152,9 +147,25 @@
             "name": "ci-windows",
             "inherits": [
                 "ci-build",
-                "ci-win64",
-                "dev-mode"
+                "ci-win64"
             ]
         }
-    ]
+    ],
+    "buildPresets": [
+        {
+          "name": "ci-ubuntu-build",
+          "configurePreset": "ci-ubuntu",
+          "configuration": "Release"
+        },
+        {
+          "name": "ci-macos-build",
+          "configurePreset": "ci-macos",
+          "configuration": "Release"
+        },
+        {
+          "name": "ci-windows-build",
+          "configurePreset": "ci-windows",
+          "configuration": "Release"
+        }
+     ]
 }

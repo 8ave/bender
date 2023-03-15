@@ -26,7 +26,7 @@ public:
 								  getParameterByName(editorState_.processor, parameterName)->getDefaultValue(),
 								  juce::ModifierKeys::noModifiers);
 	}
-	
+
 	void paint(juce::Graphics& g) override {
 		auto bounds = getLocalBounds().toFloat();
 		background->drawWithin(g, bounds, juce::RectanglePlacement::stretchToFit, 1.0f);
@@ -43,8 +43,8 @@ public:
 		}
 
 		front->setDrawableTransform(juce::AffineTransform::rotation(angle,
-																	front->getWidth()/2.0f,
-																	front->getHeight()/2.0f));
+																	float(front->getWidth())/2.0f,
+																	float(front->getHeight())/2.0f));
 		front->drawWithin(g, bounds,
 						  juce::RectanglePlacement::stretchToFit, 1.0f);
 	}

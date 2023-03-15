@@ -48,7 +48,6 @@ BenderEditor::BenderEditor(
                   {"f1cross", &p.getBenderParameters().f1cross},
                   {"f2self", &p.getBenderParameters().f2self},
                   {"f2cross", &p.getBenderParameters().f2cross} };
-                assert(buttonNames.size() == parameterLists.size());
 
                 bool found = false;
                 for (size_t buttonIdx = 0; buttonIdx < parameterLists.size(); ++buttonIdx) {

@@ -20,8 +20,8 @@ class SubComponent : public T {
 public:
 
 	SubComponent(juce::Rectangle<float> position_, EditorState& editorState_)
-		: position(position_)
-		, editorState(editorState_) {
+		: editorState(editorState_)
+		, position(position_) {
 		resize();
 	}
 
@@ -41,7 +41,7 @@ public:
 		float newWidth = position.getWidth() * coefX;
 		float newHeight = position.getHeight() * coefY;
 		scaled_position = juce::Rectangle<float>(newX, newY, newWidth, newHeight);
-		local_scaled_position = getLocalArea(getParentComponent(), getScaledPosition());
-		setBounds(scaled_position.toNearestInt());
+		local_scaled_position = T::getLocalArea(T::getParentComponent(), getScaledPosition());
+		T::setBounds(scaled_position.toNearestInt());
 	}
 };

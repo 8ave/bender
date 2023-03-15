@@ -28,7 +28,16 @@ if(NOT eigen_POPULATED)
   FetchContent_Populate(eigen)
 endif()
 
-find_package(JUCE CONFIG REQUIRED)
+if (GLOBAL_JUCE)
+    find_package(JUCE CONFIG REQUIRED)
+else()
+    FetchContent_Declare(
+      JUCE
+      GIT_REPOSITORY https://github.com/juce-framework/JUCE
+      GIT_TAG        2336430feafdea1c5340ce5eef705f667ea4119d
+    )
+    FetchContent_MakeAvailable(JUCE)
+endif()
 
 if (WIN32)
    set(PLUGIN_FORMATS VST3)
@@ -113,7 +122,8 @@ set_target_properties(bender_common PROPERTIES
     VISIBILITY_INLINES_HIDDEN TRUE
     C_VISIBILITY_PRESET hidden
     CXX_VISIBILITY_PRESET hidden)
-target_include_directories(bender_common PUBLIC src ${eigen_SOURCE_DIR})
+target_include_directories(bender_common PUBLIC src)
+target_include_directories(bender_common SYSTEM PUBLIC ${eigen_SOURCE_DIR})
 target_link_libraries(bender_common
 PUBLIC
     UIData

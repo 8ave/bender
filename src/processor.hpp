@@ -56,7 +56,6 @@ private:
 
 
     std::array<float, 2> in_rms{ 0 };
-    std::array<float, 2> middle_rms{ 0 };
     std::array<float, 2> out_rms{ 0 };
 
     float rms_smooth_alpha{ 0.99f };

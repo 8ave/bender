@@ -6,6 +6,7 @@
 
 #include <variant>
 #include <vector>
+#include <memory>
 #include <Eigen/Dense>
 
 #include "weights.cxx"
@@ -62,8 +63,8 @@ struct Gru {
         float res2_low;
         float res2_high;
 
-        Model(int model=0) {
-            if (model == 0) {
+        Model(int model_index = 0) {
+            if (model_index == 0) {
                 res1_low = hardcoded_res1_low;
                 res1_high = hardcoded_res1_high;
                 res2_low = hardcoded_res2_low;
@@ -217,7 +218,7 @@ struct Gru {
         // NaNs shouldn't appear, but if they do
         // the plugin shouldn't get silent forever
         for (int i = 0; i < hs; ++i) {
-            if (!isfinite(state.hidden[i])) {
+            if (!std::isfinite(state.hidden[i])) {
                 state.hidden.setZero();
                 break;
             }
@@ -247,6 +248,8 @@ struct Gru {
     }
 
 };
+
+extern int dummy_gru;
 
 
 }

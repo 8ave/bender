@@ -45,15 +45,15 @@ void BenderProcessor::processBlock(juce::AudioBuffer<float>& buffer,
     std::array<float*, 2> channelSamples = { buffer.getWritePointer(0),
                                              buffer.getWritePointer(1) };
 
-    for (auto sampleIdx = 0; sampleIdx < buffer.getNumSamples(); ++sampleIdx) {
+    for (size_t sampleIdx = 0; sampleIdx < size_t(buffer.getNumSamples()); ++sampleIdx) {
 
         if (tick % MatrixUpdatePeriod == 0) {
             size_t param_no = 0;
 
             float strength = *benderParameters.bend * *benderParameters.f1selfMain;
             for (auto& elem : benderParameters.self_elems_to_use) {
-                size_t i = elem[0];
-                size_t j = elem[1];
+                auto i = int(elem[0]);
+                auto j = int(elem[1]);
                 bendingMatrixFirstFirst(i, j) = *benderParameters.f1self[param_no] * strength;
                 ++param_no;
             }
@@ -61,8 +61,8 @@ void BenderProcessor::processBlock(juce::AudioBuffer<float>& buffer,
             param_no = 0;
             strength = *benderParameters.bend * *benderParameters.f1crossMain;
             for (auto& elem : benderParameters.cross_elems_to_use) {
-                size_t i = elem[0];
-                size_t j = elem[1];
+                auto i = int(elem[0]);
+                auto j = int(elem[1]);
                 bendingMatrixFirstSecond(i, j) = *benderParameters.f1cross[param_no] * strength;
                 ++param_no;
             }
@@ -70,8 +70,8 @@ void BenderProcessor::processBlock(juce::AudioBuffer<float>& buffer,
             param_no = 0;
             strength = *benderParameters.bend * *benderParameters.f2selfMain;
             for (auto& elem : benderParameters.self_elems_to_use) {
-                size_t i = elem[0];
-                size_t j = elem[1];
+                auto i = int(elem[0]);
+                auto j = int(elem[1]);
                 bendingMatrixSecondSecond(i, j) = *benderParameters.f2self[param_no] * strength;
                 ++param_no;
             }
@@ -79,8 +79,8 @@ void BenderProcessor::processBlock(juce::AudioBuffer<float>& buffer,
             param_no = 0;
             strength = *benderParameters.bend * *benderParameters.f2crossMain;
             for (auto& elem : benderParameters.cross_elems_to_use) {
-                size_t i = elem[0];
-                size_t j = elem[1];
+                auto i = int(elem[0]);
+                auto j = int(elem[1]);
                 bendingMatrixSecondFirst(i, j) = *benderParameters.f2cross[param_no] * strength;
                 ++param_no;
             }
@@ -114,7 +114,7 @@ void BenderProcessor::processBlock(juce::AudioBuffer<float>& buffer,
                                   smoothed_mix2,
                                   param_smooth_alpha);
 
-        for (auto channel = 0; channel < buffer.getNumChannels(); ++channel) {
+        for (size_t channel = 0; channel < size_t(buffer.getNumChannels()); ++channel) {
 
             float sample = channelSamples[channel][sampleIdx];
             // making signal less hot
@@ -167,7 +167,7 @@ void BenderProcessor::prepareToPlay(double sampleRate, int samplesPerBlock) {
     rms_smooth_alpha = expf(-2.0f * float(M_PI) * 3.0f / float(sampleRate));
     param_smooth_alpha = expf(-2.0f * float(M_PI) * 4.0f / float(sampleRate));
     decibels_smooth_alpha = expf(-2.0f * float(M_PI) * 4.0f / float(sampleRate) * DecibelsUpdatePeriod);
-    envelopeWorkbuf.resize(samplesPerBlock);
+    envelopeWorkbuf.resize(size_t(samplesPerBlock));
 
     logSampleRateFactor = float( log(sampleRate / 88200.0) * 0.142763554245889 );
 
