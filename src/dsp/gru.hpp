@@ -7,7 +7,18 @@
 #include <variant>
 #include <vector>
 #include <memory>
+
+// 4127 suppression can be removed for eigen >3.4.0
+#ifdef _MSC_VER
+  #pragma warning( push )
+  // conditional expression is constant
+  #pragma warning( disable : 4127 )
+#endif
 #include <Eigen/Dense>
+#ifdef _MSC_VER
+  #pragma warning( pop )
+#endif
+
 
 #include "weights.cxx"
 
