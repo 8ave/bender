@@ -184,3 +184,32 @@ function( base_plugin target_type target name code )
 endfunction()
 
 base_plugin( plugin bender Bender BNDR )
+
+# Include CPack and configure packaging options
+install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bender_artefacts/Release/VST3/Bender.vst3/"
+        DESTINATION "bender.vst3"
+        COMPONENT VST3)
+
+if(WIN32)
+    set(CPACK_GENERATOR "NSIS")
+    set(CPACK_NSIS_INSTALL_ROOT "C:\\Program Files\\Common Files\\VST3")
+
+elseif(APPLE)
+    set(CPACK_GENERATOR "DragNDrop")
+elseif(UNIX)
+    set(CPACK_GENERATOR "TGZ")
+else()
+    message(FATAL_ERROR "Unknown platform for packaging.")
+endif()
+set(CPACK_PACKAGE_VENDOR "8ave")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Bender - A JUCE-based audio plugin")
+set(CPACK_PACKAGE_VERSION_MAJOR "${bender_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${bender_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${bender_VERSION_PATCH}")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "bender")
+set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
+set(CPACK_COMPONENTS_ALL VST3)
+include(CPack)
+

@@ -8,6 +8,10 @@ Second, Neural Bender provides machinery that allows you to manually interfere w
 
 Finally, Neural Bender includes a filter envelope that can be triggered by midi note on/off events.
 
+# Binaries
+
+See https://github.com/8ave/bender/releases/ . At the moment only win64 build is ready.
+
 # Building
 
 To build Neural Bender, you will need a system with compiler/cmake/JUCE dependencies installed. If you're not sure how to do this, see the Windows/macOS/Linux sections at https://tobanteaudio.gitbook.io/juce-cookbook/setup.
